@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +22,7 @@ public class Entrega {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	private LocalDateTime data;
 	
@@ -36,13 +38,19 @@ public class Entrega {
 	
 	private int nota;
 	
-	private String entregador;
+	@ManyToOne
+	@JoinColumn(name = "entregador_id")
+	private Entregador entregador;
+	
+	@ManyToOne
+	@JoinColumn(name = "veiculo_id") 
+	private Veiculo veiculo;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEntrega status;
 
 	public Entrega(LocalDateTime data, String nomeCliente, String bairro, String valor, String troco, boolean fragil,
-			int nota, String entregador, StatusEntrega status) {
+			int nota, Entregador entregador, Veiculo veiculo, StatusEntrega status) {
 		this.data = data;
 		this.nomeCliente = nomeCliente;
 		this.bairro = bairro;
@@ -51,6 +59,7 @@ public class Entrega {
 		this.fragil = fragil;
 		this.nota = nota;
 		this.entregador = entregador;
+		this.veiculo = veiculo;
 		this.status = status;
 	}
 
