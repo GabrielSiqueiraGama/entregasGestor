@@ -47,7 +47,7 @@ public class Entrega {
 	private Veiculo veiculo;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusEntrega status;
+	private StatusEntrega status = StatusEntrega.EM_ANDAMENTO;
 
 	public Entrega(LocalDateTime data, String nomeCliente, String bairro, String valor, String troco, boolean fragil,
 			int nota, Entregador entregador, Veiculo veiculo, StatusEntrega status) {
