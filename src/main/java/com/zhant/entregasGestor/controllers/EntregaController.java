@@ -30,12 +30,12 @@ public class EntregaController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Entrega create(@Valid @RequestBody Entrega entrega) {
+	public EntregaDTO create(@Valid @RequestBody Entrega entrega) {
 		return entregaService.create(entrega);
 	}
 	
 	@PutMapping("/{id}")
-	public Entrega update(@Valid @RequestBody Entrega entrega, int id) throws BadRequestException {
+	public EntregaDTO update(@Valid @RequestBody Entrega entrega, int id) throws BadRequestException {
 		return entregaService.update(id, entrega);
 	}
 	
