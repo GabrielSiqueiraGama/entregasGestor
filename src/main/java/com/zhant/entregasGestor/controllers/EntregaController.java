@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.zhant.entregasGestor.dto.EntregaDTO;
 import com.zhant.entregasGestor.models.Entrega;
 import com.zhant.entregasGestor.services.EntregaService;
 
@@ -23,7 +24,7 @@ public class EntregaController {
 	EntregaService entregaService;
 	
 	@GetMapping
-	public List<Entrega> findEntregas(){
+	public List<EntregaDTO> findEntregas(){
 		return entregaService.findAll();
 	}
 	

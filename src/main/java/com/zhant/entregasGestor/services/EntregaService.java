@@ -1,5 +1,6 @@
 package com.zhant.entregasGestor.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.coyote.BadRequestException;
@@ -20,8 +21,18 @@ public class EntregaService {
 	@Autowired
 	private EntregaRepository entregaRepository;
 	
-	public List<Entrega> findAll() {
-		return entregaRepository.findAll();
+	public List<EntregaDTO> findAll() {
+		List<Entrega> allEntregas = entregaRepository.findAll();
+		List<EntregaDTO> dtos = new ArrayList<EntregaDTO>(allEntregas.size());
+		for(Entrega entrega: allEntregas) {
+			EntregaDTO dto = new EntregaDTO(entrega.getId(),entrega.getData(), entrega.getNomeCliente(), 
+					entrega.getBairro(), entrega.getValor(), entrega.getTroco(), entrega.isFragil(),
+					entrega.getNota(),entrega.getStatus().toString(), entrega.getEntregador().getId(),
+					entrega.getVeiculo().getId());
+			dtos.add(dto);
+		}
+		
+		return dtos;
 	}
 	public List<EntregaDTO> findByVeiculo(Veiculo veiculo){
 		return entregaRepository.findByVeiculo(veiculo);
