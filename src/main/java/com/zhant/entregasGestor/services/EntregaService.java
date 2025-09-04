@@ -13,6 +13,8 @@ import com.zhant.entregasGestor.models.Entrega;
 import com.zhant.entregasGestor.models.Entregador;
 import com.zhant.entregasGestor.models.Veiculo;
 import com.zhant.entregasGestor.repositories.EntregaRepository;
+import com.zhant.entregasGestor.repositories.EntregadorRepository;
+import com.zhant.entregasGestor.repositories.VeiculoRepository;
 
 import jakarta.validation.Valid;
 
@@ -22,10 +24,14 @@ public class EntregaService {
 	@Autowired
 	private EntregaRepository entregaRepository;
 	private EntregaMapper entregaMapper;
+	private VeiculoRepository veiculoRepository;
+	private EntregadorRepository entregadorRepository;
 	
-	public EntregaService(EntregaRepository entregaRepository, EntregaMapper entregaMapper) {
+	public EntregaService(EntregaRepository entregaRepository, EntregaMapper entregaMapper, VeiculoRepository veiculoRepository, EntregadorRepository entregadorRepository) {
 		this.entregaMapper = entregaMapper;
 		this.entregaRepository = entregaRepository;
+		this.veiculoRepository = veiculoRepository;
+		this.entregadorRepository = entregadorRepository;
 	}
 	
 	public List<EntregaDTO> findAll() {
@@ -46,12 +52,16 @@ public class EntregaService {
 		return entregaRepository.findById(id).map(entregaMapper::toDto).orElseThrow(()-> new BadRequestException("Entrega não encontrada!"));
 	}
 	
-	public List<EntregaDTO> findByVeiculo(Veiculo veiculo){
+	public List<EntregaDTO> findByVeiculo(int veiculoId) throws BadRequestException{
+		Veiculo veiculo = veiculoRepository.findById(veiculoId).orElseThrow(()-> new BadRequestException("Veiculo não encontrado"));
 		return entregaRepository.findByVeiculo(veiculo).stream().map(entregaMapper::toDto).toList();
 	}
-	public List<EntregaDTO> findByEntregador(Entregador entregador){
+	
+	public List<EntregaDTO> findByEntregador(int entregadorId) throws BadRequestException{
+		Entregador entregador = entregadorRepository.findById(entregadorId).orElseThrow(()-> new BadRequestException("Entregador não encontrado"));
 		return entregaRepository.findByEntregador(entregador).stream().map(entregaMapper::toDto).toList();
 	}
+	
 	public List<EntregaDTO> findByBairro(String bairro){
 		return entregaRepository.findByBairro(bairro).stream().map(entregaMapper::toDto).toList();
 	}
