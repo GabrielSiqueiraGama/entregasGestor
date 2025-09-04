@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhant.entregasGestor.dto.EntregadorDTO;
-import com.zhant.entregasGestor.models.Entregador;
 import com.zhant.entregasGestor.services.EntregadorService;
 
 import jakarta.validation.Valid;
@@ -37,7 +36,7 @@ public class EntregadorController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public EntregadorDTO create(@Valid @RequestBody Entregador entregador) {
+	public EntregadorDTO create(@Valid @RequestBody EntregadorDTO entregador) {
 		return entregadorService.create(entregador);
 	}
 	
@@ -47,7 +46,7 @@ public class EntregadorController {
 	}
 	
 	@PutMapping("/{id}")
-	public EntregadorDTO update(@PathVariable int id, @RequestBody Entregador entregador) throws BadRequestException {
+	public EntregadorDTO update(@PathVariable int id, @RequestBody EntregadorDTO entregador) throws BadRequestException {
 		return entregadorService.update(id, entregador);
 	}
 	

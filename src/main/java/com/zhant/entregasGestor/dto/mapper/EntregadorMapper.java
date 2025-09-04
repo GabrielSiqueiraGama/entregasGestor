@@ -11,4 +11,13 @@ public class EntregadorMapper {
 	public EntregadorDTO toDto(Entregador entregador) {
 		return new EntregadorDTO(entregador.getId(), entregador.getNome());
 	}
+	
+	public Entregador toEntity(EntregadorDTO entregadorDTO) {
+
+		Entregador entregador = new Entregador();
+		entregador.setNome(entregadorDTO.nome());
+		return entregador;
+		
+		//search about builder patterns
+	}
 }
