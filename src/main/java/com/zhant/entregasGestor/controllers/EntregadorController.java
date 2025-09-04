@@ -16,42 +16,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhant.entregasGestor.dto.VeiculoDTO;
-import com.zhant.entregasGestor.models.Veiculo;
-import com.zhant.entregasGestor.services.VeiculoService;
+import com.zhant.entregasGestor.dto.EntregadorDTO;
+import com.zhant.entregasGestor.models.Entregador;
+import com.zhant.entregasGestor.services.EntregadorService;
+
+import jakarta.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/api/veiculos")
-public class VeiculoController {
+@RequestMapping("api/entregadores")
+public class EntregadorController {
 
 	@Autowired
-	private VeiculoService veiculoService;
+	private EntregadorService entregadorService;
 	
 	@GetMapping
-	public List<VeiculoDTO> findVeiculos() {
-		return veiculoService.findAll();
-	}
-	
-	@GetMapping("/{id}")
-	public VeiculoDTO findVeiculoById(@PathVariable int id) throws BadRequestException {
-		return veiculoService.findById(id);
+	public List<EntregadorDTO> findEntregadores(){
+		return entregadorService.findAll();
 	}
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public VeiculoDTO create(@RequestBody Veiculo veiculo) {
-		return veiculoService.create(veiculo);
+	public EntregadorDTO create(@Valid @RequestBody Entregador entregador) {
+		return entregadorService.create(entregador);
+	}
+	
+	@GetMapping("/{id}")
+	public EntregadorDTO findById(@PathVariable int id) throws BadRequestException {
+		return entregadorService.findById(id);
 	}
 	
 	@PutMapping("/{id}")
-	public VeiculoDTO update(@PathVariable int id, @RequestBody Veiculo veiculo) throws BadRequestException {
-		return veiculoService.update(id, veiculo);
+	public EntregadorDTO update(@PathVariable int id, @RequestBody Entregador entregador) throws BadRequestException {
+		return entregadorService.update(id, entregador);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable int id) throws BadRequestException {
-		veiculoService.delete(id);
+	public void delete(@PathVariable int id) throws BadRequestException{
+		entregadorService.delete(id);
 	}
 }

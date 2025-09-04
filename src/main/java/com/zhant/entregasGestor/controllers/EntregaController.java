@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/api/entrega")
+@RequestMapping("/api/entregas")
 public class EntregaController {
 
 	@Autowired
