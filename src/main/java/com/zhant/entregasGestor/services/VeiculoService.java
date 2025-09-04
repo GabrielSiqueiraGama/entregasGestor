@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.zhant.entregasGestor.dto.VeiculoDTO;
 import com.zhant.entregasGestor.dto.mapper.VeiculoMapper;
-import com.zhant.entregasGestor.models.Veiculo;
 import com.zhant.entregasGestor.repositories.VeiculoRepository;
 
 @Service
@@ -32,15 +31,15 @@ public class VeiculoService {
 		return veiculoRepository.findById(id).map(veiculoMapper::toDto).orElseThrow(()-> new BadRequestException("Veiculo não encontrado"));
 	}
 	
-	public VeiculoDTO update(int id, Veiculo veiculo) throws BadRequestException {
+	public VeiculoDTO update(int id, VeiculoDTO veiculo) throws BadRequestException {
 		return veiculoRepository.findById(id).map(veiculoFunction ->{
-			veiculoFunction.setNome(veiculo.getNome());
+			veiculoFunction.setNome(veiculo.nome());
 			return veiculoRepository.save(veiculoFunction);
 		}).map(veiculoMapper::toDto).orElseThrow(()-> new BadRequestException("Error ao editar"));
 	}
 	
-	public VeiculoDTO create(Veiculo veiculo) {
-		return veiculoMapper.toDto(veiculoRepository.save(veiculo));
+	public VeiculoDTO create(VeiculoDTO veiculo) {
+		return veiculoMapper.toDto(veiculoRepository.save(veiculoMapper.toEntity(veiculo)));
 	}
 	
 	

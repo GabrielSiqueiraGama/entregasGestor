@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhant.entregasGestor.dto.VeiculoDTO;
-import com.zhant.entregasGestor.models.Veiculo;
 import com.zhant.entregasGestor.services.VeiculoService;
 
 @Validated
@@ -40,12 +39,12 @@ public class VeiculoController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public VeiculoDTO create(@RequestBody Veiculo veiculo) {
+	public VeiculoDTO create(@RequestBody VeiculoDTO veiculo) {
 		return veiculoService.create(veiculo);
 	}
 	
 	@PutMapping("/{id}")
-	public VeiculoDTO update(@PathVariable int id, @RequestBody Veiculo veiculo) throws BadRequestException {
+	public VeiculoDTO update(@PathVariable int id, @RequestBody VeiculoDTO veiculo) throws BadRequestException {
 		return veiculoService.update(id, veiculo);
 	}
 	

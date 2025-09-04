@@ -11,4 +11,13 @@ public class VeiculoMapper {
 	public VeiculoDTO toDto(Veiculo veiculo) {
 		return new VeiculoDTO(veiculo.getId(), veiculo.getNome());
 	}
+	
+	public Veiculo toEntity(VeiculoDTO veiculoDTO) {
+
+		Veiculo veiculo = new Veiculo();
+		veiculo.setNome(veiculoDTO.nome());
+		return veiculo;
+		
+		//search about builder patterns
+	}
 }
