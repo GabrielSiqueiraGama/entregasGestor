@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhant.entregasGestor.dto.EntregaDTO;
-import com.zhant.entregasGestor.models.Entrega;
 import com.zhant.entregasGestor.services.EntregaService;
 
 import jakarta.validation.Valid;
@@ -65,13 +64,13 @@ public class EntregaController {
 	}
 	
 	@PostMapping
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public EntregaDTO create(@Valid @RequestBody Entrega entrega) {
-		return entregaService.create(entrega);
+	@ResponseStatus(HttpStatus.CREATED)
+	public EntregaDTO create(@Valid @RequestBody EntregaDTO entrega)  {
+	    return entregaService.create(entrega);
 	}
 	
 	@PutMapping("/{id}")
-	public EntregaDTO update(@PathVariable int id, @Valid @RequestBody Entrega entrega) throws BadRequestException {
+	public EntregaDTO update(@PathVariable int id, @Valid @RequestBody EntregaDTO entrega) throws BadRequestException {
 		return entregaService.update(id, entrega);
 	}
 	

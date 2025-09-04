@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhant.entregasGestor.dto.EntregaDTO;
 import com.zhant.entregasGestor.dto.mapper.EntregaMapper;
-import com.zhant.entregasGestor.models.Entrega;
+import com.zhant.entregasGestor.enums.StatusEntrega;
 import com.zhant.entregasGestor.models.Entregador;
 import com.zhant.entregasGestor.models.Veiculo;
 import com.zhant.entregasGestor.repositories.EntregaRepository;
@@ -72,22 +72,27 @@ public class EntregaService {
 		return entregaRepository.findByNota(nota).stream().map(entregaMapper::toDto).toList();
 	}
 	
-	public EntregaDTO create(@Valid Entrega entrega) {
-		return entregaMapper.toDto(entregaRepository.save(entrega));
+	public EntregaDTO create(@Valid EntregaDTO entrega) {
+	    return entregaMapper.toDto(entregaRepository.save(entregaMapper.toEntity(entrega)));
 	}
 	
-	public EntregaDTO update(int id,@Valid Entrega entrega) throws BadRequestException {
+	public EntregaDTO update(int id,@Valid EntregaDTO entrega) throws BadRequestException {
+        Entregador entregador = entregadorRepository.findById(entrega.entregadorId())
+                .orElseThrow(() -> new BadRequestException("Entregador não encontrado"));
+		Veiculo veiculo = veiculoRepository.findById(entrega.veiculoId())
+		          .orElseThrow(() -> new BadRequestException("Veículo não encontrado"));
+
 		return entregaRepository.findById(id).map(entregaFunction ->{
-			entregaFunction.setData(entrega.getData());
-			entregaFunction.setNomeCliente(entrega.getNomeCliente());
-			entregaFunction.setBairro(entrega.getBairro());
-			entregaFunction.setValor(entrega.getValor());
-			entregaFunction.setTroco(entrega.getTroco());
-			entregaFunction.setFragil(entrega.isFragil());
-			entregaFunction.setNota(entrega.getNota());
-			entregaFunction.setEntregador(entrega.getEntregador());
-			entregaFunction.setVeiculo(entrega.getVeiculo());
-			entregaFunction.setStatus(entrega.getStatus());
+			entregaFunction.setData(entrega.data());
+			entregaFunction.setNomeCliente(entrega.nomeCliente());
+			entregaFunction.setBairro(entrega.bairro());
+			entregaFunction.setValor(entrega.valor());
+			entregaFunction.setTroco(entrega.troco());
+			entregaFunction.setFragil(entrega.fragil());
+			entregaFunction.setNota(entrega.nota());
+			entregaFunction.setEntregador(entregador);
+			entregaFunction.setVeiculo(veiculo);
+			entregaFunction.setStatus(StatusEntrega.valueOf(entrega.status()));
 			return entregaRepository.save(entregaFunction);
 		}).map(entregaMapper::toDto).orElseThrow(()-> new BadRequestException("aaaaa"));
 	}
