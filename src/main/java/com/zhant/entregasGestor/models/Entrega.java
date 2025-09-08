@@ -24,19 +24,19 @@ public class Entrega {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private LocalDateTime data;
+	private LocalDateTime orderDate;
 	
-	private String nomeCliente;
+	private String customerName;
 	
-	private String bairro;
+	private String neighborhood;
 	
-	private String valor;
+	private String amount;
 	
-	private String troco;
+	private String change;
 	
-	private boolean fragil;
+	private boolean fragile;
 	
-	private int nota;
+	private int noteCode;
 	
 	@ManyToOne
 	@JoinColumn(name = "courier_id")
@@ -49,15 +49,15 @@ public class Entrega {
 	@Enumerated(EnumType.STRING)
 	private StatusEntrega status = StatusEntrega.EM_ANDAMENTO;
 
-	public Entrega(LocalDateTime data, String nomeCliente, String bairro, String valor, String troco, boolean fragil,
-			int nota, Courier courier, Vehicle vehicle, StatusEntrega status) {
-		this.data = data;
-		this.nomeCliente = nomeCliente;
-		this.bairro = bairro;
-		this.valor = valor;
-		this.troco = troco;
-		this.fragil = fragil;
-		this.nota = nota;
+	public Entrega(LocalDateTime orderDate, String customerName, String neighborhood, String amount, String change, boolean fragile,
+			int noteCode, Courier courier, Vehicle vehicle, StatusEntrega status) {
+		this.orderDate = orderDate;
+		this.customerName = customerName;
+		this.neighborhood = neighborhood;
+		this.amount = amount;
+		this.change = change;
+		this.fragile = fragile;
+		this.noteCode = noteCode;
 		this.courier = courier;
 		this.vehicle = vehicle;
 		this.status = status;

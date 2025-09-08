@@ -83,13 +83,13 @@ public class EntregaService {
 		          .orElseThrow(() -> new BadRequestException("Veículo não encontrado"));
 
 		return entregaRepository.findById(id).map(entregaFunction ->{
-			entregaFunction.setData(entrega.data());
-			entregaFunction.setNomeCliente(entrega.nomeCliente());
-			entregaFunction.setBairro(entrega.bairro());
-			entregaFunction.setValor(entrega.valor());
-			entregaFunction.setTroco(entrega.troco());
-			entregaFunction.setFragil(entrega.fragil());
-			entregaFunction.setNota(entrega.nota());
+			entregaFunction.setOrderDate(entrega.orderDate());
+			entregaFunction.setCustomerName(entrega.customerName());
+			entregaFunction.setNeighborhood(entrega.neighborhood());
+			entregaFunction.setAmount(entrega.amount());
+			entregaFunction.setChange(entrega.change());
+			entregaFunction.setFragile(entrega.fragile());
+			entregaFunction.setNoteCode(entrega.noteCode());
 			entregaFunction.setCourier(courier);
 			entregaFunction.setVehicle(vehicle);
 			entregaFunction.setStatus(StatusEntrega.valueOf(entrega.status()));

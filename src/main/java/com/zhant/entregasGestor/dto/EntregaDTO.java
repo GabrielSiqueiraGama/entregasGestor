@@ -9,9 +9,9 @@ import com.zhant.entregasGestor.enums.validation.ValueOfEnum;
 import jakarta.validation.constraints.NotBlank;
 
 public record EntregaDTO(@JsonProperty("_id") int id,
-		LocalDateTime data, @NotBlank String nomeCliente, 
-		@NotBlank String bairro,
-		@NotBlank String valor, @NotBlank  String troco, boolean fragil, int nota,
+		LocalDateTime orderDate, @NotBlank String customerName, 
+		@NotBlank String neighborhood,
+		@NotBlank String amount, @NotBlank  String change, boolean fragile, int noteCode,
 		@NotBlank @ValueOfEnum(enumClass = StatusEntrega.class) String status, int courierId, int vehicleId
 		) {
 	

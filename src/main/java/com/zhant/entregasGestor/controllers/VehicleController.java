@@ -21,7 +21,7 @@ import com.zhant.entregasGestor.services.VehicleService;
 
 @Validated
 @RestController
-@RequestMapping("/api/vehicle")
+@RequestMapping("/api/vehicles")
 public class VehicleController {
 
 	@Autowired

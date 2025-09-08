@@ -26,9 +26,9 @@ public class EntregaMapper {
 	    int courierId = entrega.getCourier() != null ? entrega.getCourier().getId() : 0;
 	    int vehicleId = entrega.getVehicle() != null ? entrega.getVehicle().getId() : 0;
 	    
-		return new EntregaDTO(entrega.getId(),entrega.getData(), entrega.getNomeCliente(), 
-				entrega.getBairro(), entrega.getValor(), entrega.getTroco(), entrega.isFragil(),
-				entrega.getNota(),entrega.getStatus().toString(), courierId, vehicleId);
+		return new EntregaDTO(entrega.getId(),entrega.getOrderDate(), entrega.getCustomerName(), 
+				entrega.getNeighborhood(), entrega.getAmount(), entrega.getChange(), entrega.isFragile(),
+				entrega.getNoteCode(),entrega.getStatus().toString(), courierId, vehicleId);
 	}
 	
 	public Entrega toEntity(EntregaDTO entregaDTO) {
@@ -41,13 +41,13 @@ public class EntregaMapper {
 		Entrega entrega = new Entrega();
 		
 		entrega.setId(entregaDTO.id());
-		entrega.setData(entregaDTO.data());
-		entrega.setNomeCliente(entregaDTO.nomeCliente());
-		entrega.setBairro(entregaDTO.bairro());
-		entrega.setValor(entregaDTO.valor());
-		entrega.setTroco(entregaDTO.troco());
-		entrega.setFragil(entregaDTO.fragil());
-		entrega.setNota(entregaDTO.nota());
+		entrega.setOrderDate(entregaDTO.orderDate());
+		entrega.setCustomerName(entregaDTO.customerName());
+		entrega.setNeighborhood(entregaDTO.neighborhood());
+		entrega.setAmount(entregaDTO.amount());
+		entrega.setChange(entregaDTO.change());
+		entrega.setFragile(entregaDTO.fragile());
+		entrega.setNoteCode(entregaDTO.noteCode());
 		entrega.setStatus(StatusEntrega.valueOf(entregaDTO.status()));
 		entrega.setCourier(courier);
 		entrega.setVehicle(vehicle);
