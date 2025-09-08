@@ -4,5 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record EntregadorDTO(@JsonProperty("_id") int id,@NotBlank String nome) {
+public record VehicleDTO(@JsonProperty("_id") int id,@NotBlank String name) {
+
 }

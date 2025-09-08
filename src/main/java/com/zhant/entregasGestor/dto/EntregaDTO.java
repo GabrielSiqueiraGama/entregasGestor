@@ -12,7 +12,7 @@ public record EntregaDTO(@JsonProperty("_id") int id,
 		LocalDateTime data, @NotBlank String nomeCliente, 
 		@NotBlank String bairro,
 		@NotBlank String valor, @NotBlank  String troco, boolean fragil, int nota,
-		@NotBlank @ValueOfEnum(enumClass = StatusEntrega.class) String status, int entregadorId, int veiculoId
+		@NotBlank @ValueOfEnum(enumClass = StatusEntrega.class) String status, int courierId, int vehicleId
 		) {
 	
 }	

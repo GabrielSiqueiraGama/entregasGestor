@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import com.zhant.entregasGestor.dto.EntregaDTO;
 import com.zhant.entregasGestor.dto.mapper.EntregaMapper;
 import com.zhant.entregasGestor.enums.StatusEntrega;
-import com.zhant.entregasGestor.models.Entregador;
-import com.zhant.entregasGestor.models.Veiculo;
+import com.zhant.entregasGestor.models.Courier;
+import com.zhant.entregasGestor.models.Vehicle;
 import com.zhant.entregasGestor.repositories.EntregaRepository;
-import com.zhant.entregasGestor.repositories.EntregadorRepository;
-import com.zhant.entregasGestor.repositories.VeiculoRepository;
+import com.zhant.entregasGestor.repositories.CourierRepository;
+import com.zhant.entregasGestor.repositories.VehicleRepository;
 
 import jakarta.validation.Valid;
 
@@ -24,14 +24,14 @@ public class EntregaService {
 	@Autowired
 	private EntregaRepository entregaRepository;
 	private EntregaMapper entregaMapper;
-	private VeiculoRepository veiculoRepository;
-	private EntregadorRepository entregadorRepository;
+	private VehicleRepository vehicleRepository;
+	private CourierRepository courierRepository;
 	
-	public EntregaService(EntregaRepository entregaRepository, EntregaMapper entregaMapper, VeiculoRepository veiculoRepository, EntregadorRepository entregadorRepository) {
+	public EntregaService(EntregaRepository entregaRepository, EntregaMapper entregaMapper, VehicleRepository vehicleRepository, CourierRepository courierRepository) {
 		this.entregaMapper = entregaMapper;
 		this.entregaRepository = entregaRepository;
-		this.veiculoRepository = veiculoRepository;
-		this.entregadorRepository = entregadorRepository;
+		this.vehicleRepository = vehicleRepository;
+		this.courierRepository = courierRepository;
 	}
 	
 	public List<EntregaDTO> findAll() {
@@ -52,14 +52,14 @@ public class EntregaService {
 		return entregaRepository.findById(id).map(entregaMapper::toDto).orElseThrow(()-> new BadRequestException("Entrega não encontrada!"));
 	}
 	
-	public List<EntregaDTO> findByVeiculo(int veiculoId) throws BadRequestException{
-		Veiculo veiculo = veiculoRepository.findById(veiculoId).orElseThrow(()-> new BadRequestException("Veiculo não encontrado"));
-		return entregaRepository.findByVeiculo(veiculo).stream().map(entregaMapper::toDto).toList();
+	public List<EntregaDTO> findByVehicle(int vehicleId) throws BadRequestException{
+		Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(()-> new BadRequestException("Veiculo não encontrado"));
+		return entregaRepository.findByVehicle(vehicle).stream().map(entregaMapper::toDto).toList();
 	}
 	
-	public List<EntregaDTO> findByEntregador(int entregadorId) throws BadRequestException{
-		Entregador entregador = entregadorRepository.findById(entregadorId).orElseThrow(()-> new BadRequestException("Entregador não encontrado"));
-		return entregaRepository.findByEntregador(entregador).stream().map(entregaMapper::toDto).toList();
+	public List<EntregaDTO> findByCourier(int courierId) throws BadRequestException{
+		Courier courier = courierRepository.findById(courierId).orElseThrow(()-> new BadRequestException("Entregador não encontrado"));
+		return entregaRepository.findByCourier(courier).stream().map(entregaMapper::toDto).toList();
 	}
 	
 	public List<EntregaDTO> findByBairro(String bairro){
@@ -77,9 +77,9 @@ public class EntregaService {
 	}
 	
 	public EntregaDTO update(int id,@Valid EntregaDTO entrega) throws BadRequestException {
-        Entregador entregador = entregadorRepository.findById(entrega.entregadorId())
+        Courier courier = courierRepository.findById(entrega.courierId())
                 .orElseThrow(() -> new BadRequestException("Entregador não encontrado"));
-		Veiculo veiculo = veiculoRepository.findById(entrega.veiculoId())
+		Vehicle vehicle = vehicleRepository.findById(entrega.vehicleId())
 		          .orElseThrow(() -> new BadRequestException("Veículo não encontrado"));
 
 		return entregaRepository.findById(id).map(entregaFunction ->{
@@ -90,8 +90,8 @@ public class EntregaService {
 			entregaFunction.setTroco(entrega.troco());
 			entregaFunction.setFragil(entrega.fragil());
 			entregaFunction.setNota(entrega.nota());
-			entregaFunction.setEntregador(entregador);
-			entregaFunction.setVeiculo(veiculo);
+			entregaFunction.setCourier(courier);
+			entregaFunction.setVehicle(vehicle);
 			entregaFunction.setStatus(StatusEntrega.valueOf(entrega.status()));
 			return entregaRepository.save(entregaFunction);
 		}).map(entregaMapper::toDto).orElseThrow(()-> new BadRequestException("aaaaa"));

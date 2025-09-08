@@ -5,37 +5,37 @@ import org.springframework.stereotype.Component;
 import com.zhant.entregasGestor.dto.EntregaDTO;
 import com.zhant.entregasGestor.enums.StatusEntrega;
 import com.zhant.entregasGestor.models.Entrega;
-import com.zhant.entregasGestor.models.Entregador;
-import com.zhant.entregasGestor.models.Veiculo;
-import com.zhant.entregasGestor.repositories.EntregadorRepository;
-import com.zhant.entregasGestor.repositories.VeiculoRepository;
+import com.zhant.entregasGestor.models.Courier;
+import com.zhant.entregasGestor.models.Vehicle;
+import com.zhant.entregasGestor.repositories.CourierRepository;
+import com.zhant.entregasGestor.repositories.VehicleRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Component
 public class EntregaMapper {
-    private final EntregadorRepository entregadorRepository;
-    private final VeiculoRepository veiculoRepository;
+    private final CourierRepository courierRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public EntregaMapper(EntregadorRepository entregadorRepository, VeiculoRepository veiculoRepository) {
-        this.entregadorRepository = entregadorRepository;
-        this.veiculoRepository = veiculoRepository;
+    public EntregaMapper(CourierRepository courierRepository, VehicleRepository vehicleRepository) {
+        this.courierRepository = courierRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
 	public EntregaDTO toDto(Entrega entrega) {
-	    int entregadorId = entrega.getEntregador() != null ? entrega.getEntregador().getId() : 0;
-	    int veiculoId = entrega.getVeiculo() != null ? entrega.getVeiculo().getId() : 0;
+	    int courierId = entrega.getCourier() != null ? entrega.getCourier().getId() : 0;
+	    int vehicleId = entrega.getVehicle() != null ? entrega.getVehicle().getId() : 0;
 	    
 		return new EntregaDTO(entrega.getId(),entrega.getData(), entrega.getNomeCliente(), 
 				entrega.getBairro(), entrega.getValor(), entrega.getTroco(), entrega.isFragil(),
-				entrega.getNota(),entrega.getStatus().toString(), entregadorId, veiculoId);
+				entrega.getNota(),entrega.getStatus().toString(), courierId, vehicleId);
 	}
 	
 	public Entrega toEntity(EntregaDTO entregaDTO) {
-        Entregador entregador = entregadorRepository.findById(entregaDTO.entregadorId())
+        Courier courier = courierRepository.findById(entregaDTO.courierId())
                 .orElseThrow(() -> new EntityNotFoundException("Entregador não encontrado"));
 
-        Veiculo veiculo = veiculoRepository.findById(entregaDTO.veiculoId())
+        Vehicle vehicle = vehicleRepository.findById(entregaDTO.vehicleId())
                 .orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado"));
 
 		Entrega entrega = new Entrega();
@@ -49,8 +49,8 @@ public class EntregaMapper {
 		entrega.setFragil(entregaDTO.fragil());
 		entrega.setNota(entregaDTO.nota());
 		entrega.setStatus(StatusEntrega.valueOf(entregaDTO.status()));
-		entrega.setEntregador(entregador);
-		entrega.setVeiculo(veiculo);
+		entrega.setCourier(courier);
+		entrega.setVehicle(vehicle);
 		
 		return entrega;
 		

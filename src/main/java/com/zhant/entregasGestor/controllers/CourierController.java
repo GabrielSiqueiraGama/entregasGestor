@@ -16,43 +16,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhant.entregasGestor.dto.EntregadorDTO;
-import com.zhant.entregasGestor.services.EntregadorService;
+import com.zhant.entregasGestor.dto.CourierDTO;
+import com.zhant.entregasGestor.services.CourierService;
 
 import jakarta.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("api/entregadores")
-public class EntregadorController {
+@RequestMapping("api/couriers")
+public class CourierController {
 
 	@Autowired
-	private EntregadorService entregadorService;
+	private CourierService courierService;
 	
 	@GetMapping
-	public List<EntregadorDTO> findEntregadores(){
-		return entregadorService.findAll();
+	public List<CourierDTO> findCouriers(){
+		return courierService.findAll();
 	}
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public EntregadorDTO create(@Valid @RequestBody EntregadorDTO entregador) {
-		return entregadorService.create(entregador);
+	public CourierDTO create(@Valid @RequestBody CourierDTO courier) {
+		return courierService.create(courier);
 	}
 	
 	@GetMapping("/{id}")
-	public EntregadorDTO findById(@PathVariable int id) throws BadRequestException {
-		return entregadorService.findById(id);
+	public CourierDTO findById(@PathVariable int id) throws BadRequestException {
+		return courierService.findById(id);
 	}
 	
 	@PutMapping("/{id}")
-	public EntregadorDTO update(@PathVariable int id, @RequestBody EntregadorDTO entregador) throws BadRequestException {
-		return entregadorService.update(id, entregador);
+	public CourierDTO update(@PathVariable int id, @RequestBody CourierDTO courier) throws BadRequestException {
+		return courierService.update(id, courier);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) throws BadRequestException{
-		entregadorService.delete(id);
+		courierService.delete(id);
 	}
 }

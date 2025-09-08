@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @Validated
 @RestController
-@RequestMapping("/api/entregas")
+@RequestMapping("/api/deliveries")
 public class EntregaController {
 
 	@Autowired
@@ -38,14 +38,14 @@ public class EntregaController {
 		return entregaService.findById(id);
 	}
 	
-	@GetMapping("/veiculo/{veiculoId}")
-	public List<EntregaDTO> findEntregasByVeiculo(@PathVariable int veiculoId) throws BadRequestException{
-		return entregaService.findByVeiculo(veiculoId);
+	@GetMapping("/vehicle/{vehicleId}")
+	public List<EntregaDTO> findEntregasByVehicle(@PathVariable int vehicleId) throws BadRequestException{
+		return entregaService.findByVehicle(vehicleId);
 	}
 	
-	@GetMapping("/entregador/{entregadorId}")
-	public List<EntregaDTO> findByEntregador(@PathVariable int entregadorId) throws BadRequestException{
-		return entregaService.findByEntregador(entregadorId);
+	@GetMapping("/courier/{courierId}")
+	public List<EntregaDTO> findByEntregador(@PathVariable int courierId) throws BadRequestException{
+		return entregaService.findByCourier(courierId);
 	}
 	
 	@GetMapping("/bairro/{bairro}")

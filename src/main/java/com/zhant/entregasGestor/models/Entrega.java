@@ -39,18 +39,18 @@ public class Entrega {
 	private int nota;
 	
 	@ManyToOne
-	@JoinColumn(name = "entregador_id")
-	private Entregador entregador;
+	@JoinColumn(name = "courier_id")
+	private Courier courier;
 	
 	@ManyToOne
-	@JoinColumn(name = "veiculo_id") 
-	private Veiculo veiculo;
+	@JoinColumn(name = "vehicle_id") 
+	private Vehicle vehicle;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEntrega status = StatusEntrega.EM_ANDAMENTO;
 
 	public Entrega(LocalDateTime data, String nomeCliente, String bairro, String valor, String troco, boolean fragil,
-			int nota, Entregador entregador, Veiculo veiculo, StatusEntrega status) {
+			int nota, Courier courier, Vehicle vehicle, StatusEntrega status) {
 		this.data = data;
 		this.nomeCliente = nomeCliente;
 		this.bairro = bairro;
@@ -58,8 +58,8 @@ public class Entrega {
 		this.troco = troco;
 		this.fragil = fragil;
 		this.nota = nota;
-		this.entregador = entregador;
-		this.veiculo = veiculo;
+		this.courier = courier;
+		this.vehicle = vehicle;
 		this.status = status;
 	}
 
