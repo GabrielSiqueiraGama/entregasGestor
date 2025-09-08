@@ -26,8 +26,8 @@ public class CourierService {
 		return courierRepository.findAll().stream().map(courierMapper::toDto).toList();
 	}
 	
-	public CourierDTO create(CourierDTO entregador) {
-		return courierMapper.toDto(courierRepository.save(courierMapper.toEntity(entregador)));
+	public CourierDTO create(CourierDTO courier) {
+		return courierMapper.toDto(courierRepository.save(courierMapper.toEntity(courier)));
 	}
 	
 	public CourierDTO findById(int id) throws BadRequestException {

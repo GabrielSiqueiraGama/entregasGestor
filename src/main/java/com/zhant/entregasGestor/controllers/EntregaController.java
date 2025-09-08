@@ -44,7 +44,7 @@ public class EntregaController {
 	}
 	
 	@GetMapping("/courier/{courierId}")
-	public List<EntregaDTO> findByEntregador(@PathVariable int courierId) throws BadRequestException{
+	public List<EntregaDTO> findByCourier(@PathVariable int courierId) throws BadRequestException{
 		return entregaService.findByCourier(courierId);
 	}
 	

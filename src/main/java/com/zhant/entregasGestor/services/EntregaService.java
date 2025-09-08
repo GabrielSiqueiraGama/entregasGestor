@@ -40,8 +40,8 @@ public class EntregaService {
 		for(Entrega entrega: allEntregas) {
 			EntregaDTO dto = new EntregaDTO(entrega.getId(),entrega.getData(), entrega.getNomeCliente(), 
 					entrega.getBairro(), entrega.getValor(), entrega.getTroco(), entrega.isFragil(),
-					entrega.getNota(),entrega.getStatus().toString(), entrega.getEntregador().getId(),
-					entrega.getVeiculo().getId());
+					entrega.getNota(),entrega.getStatus().toString(), entrega.getCourier().getId(),
+					entrega.getVehicle().getId());
 			dtos.add(dto);
 		}
 		return dtos;*/
