@@ -1,5 +1,5 @@
 package com.zhant.entregasGestor.enums;
 
-public enum StatusEntrega {
+public enum DeliveryStatus {
 	EM_ANDAMENTO, FINALIZADA
 }

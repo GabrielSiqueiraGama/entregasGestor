@@ -2,7 +2,7 @@ package com.zhant.entregasGestor.models;
 
 import java.time.LocalDateTime;
 
-import com.zhant.entregasGestor.enums.StatusEntrega;
+import com.zhant.entregasGestor.enums.DeliveryStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Entrega {
+public class Delivery {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,10 +47,10 @@ public class Entrega {
 	private Vehicle vehicle;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusEntrega status = StatusEntrega.EM_ANDAMENTO;
+	private DeliveryStatus status = DeliveryStatus.EM_ANDAMENTO;
 
-	public Entrega(LocalDateTime orderDate, String customerName, String neighborhood, String amount, String change, boolean fragile,
-			int noteCode, Courier courier, Vehicle vehicle, StatusEntrega status) {
+	public Delivery(LocalDateTime orderDate, String customerName, String neighborhood, String amount, String change, boolean fragile,
+			int noteCode, Courier courier, Vehicle vehicle, DeliveryStatus status) {
 		this.orderDate = orderDate;
 		this.customerName = customerName;
 		this.neighborhood = neighborhood;
@@ -63,7 +63,7 @@ public class Entrega {
 		this.status = status;
 	}
 
-	public Entrega() {
+	public Delivery() {
 	}
 	
 	
