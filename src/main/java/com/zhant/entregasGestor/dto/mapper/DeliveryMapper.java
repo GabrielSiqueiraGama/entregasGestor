@@ -22,37 +22,37 @@ public class DeliveryMapper {
         this.vehicleRepository = vehicleRepository;
     }
 
-	public DeliveryDTO toDto(Delivery entrega) {
-	    int courierId = entrega.getCourier() != null ? entrega.getCourier().getId() : 0;
-	    int vehicleId = entrega.getVehicle() != null ? entrega.getVehicle().getId() : 0;
+	public DeliveryDTO toDto(Delivery delivery) {
+	    int courierId = delivery.getCourier() != null ? delivery.getCourier().getId() : 0;
+	    int vehicleId = delivery.getVehicle() != null ? delivery.getVehicle().getId() : 0;
 	    
-		return new DeliveryDTO(entrega.getId(),entrega.getOrderDate(), entrega.getCustomerName(), 
-				entrega.getNeighborhood(), entrega.getAmount(), entrega.getChange(), entrega.isFragile(),
-				entrega.getNoteCode(),entrega.getStatus().toString(), courierId, vehicleId);
+		return new DeliveryDTO(delivery.getId(),delivery.getOrderDate(), delivery.getCustomerName(), 
+				delivery.getNeighborhood(), delivery.getAmount(), delivery.getCashChange(), delivery.isFragile(),
+				delivery.getNoteCode(),delivery.getStatus().toString(), courierId, vehicleId);
 	}
 	
-	public Delivery toEntity(DeliveryDTO entregaDTO) {
-        Courier courier = courierRepository.findById(entregaDTO.courierId())
+	public Delivery toEntity(DeliveryDTO deliveryDTO) {
+        Courier courier = courierRepository.findById(deliveryDTO.courierId())
                 .orElseThrow(() -> new EntityNotFoundException("Entregador não encontrado"));
 
-        Vehicle vehicle = vehicleRepository.findById(entregaDTO.vehicleId())
+        Vehicle vehicle = vehicleRepository.findById(deliveryDTO.vehicleId())
                 .orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado"));
 
-		Delivery entrega = new Delivery();
+		Delivery delivery = new Delivery();
 		
-		entrega.setId(entregaDTO.id());
-		entrega.setOrderDate(entregaDTO.orderDate());
-		entrega.setCustomerName(entregaDTO.customerName());
-		entrega.setNeighborhood(entregaDTO.neighborhood());
-		entrega.setAmount(entregaDTO.amount());
-		entrega.setChange(entregaDTO.change());
-		entrega.setFragile(entregaDTO.fragile());
-		entrega.setNoteCode(entregaDTO.noteCode());
-		entrega.setStatus(DeliveryStatus.valueOf(entregaDTO.status()));
-		entrega.setCourier(courier);
-		entrega.setVehicle(vehicle);
+		delivery.setId(deliveryDTO.id());
+		delivery.setOrderDate(deliveryDTO.orderDate());
+		delivery.setCustomerName(deliveryDTO.customerName());
+		delivery.setNeighborhood(deliveryDTO.neighborhood());
+		delivery.setAmount(deliveryDTO.amount());
+		delivery.setCashChange (deliveryDTO.cashChange());
+		delivery.setFragile(deliveryDTO.fragile());
+		delivery.setNoteCode(deliveryDTO.noteCode());
+		delivery.setStatus(DeliveryStatus.valueOf(deliveryDTO.status()));
+		delivery.setCourier(courier);
+		delivery.setVehicle(vehicle);
 		
-		return entrega;
+		return delivery;
 		
 		//search about builder patterns
 	}

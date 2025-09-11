@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 public record DeliveryDTO(@JsonProperty("_id") int id,
 		LocalDateTime orderDate, @NotBlank String customerName, 
 		@NotBlank String neighborhood,
-		@NotBlank String amount, @NotBlank  String change, boolean fragile, int noteCode,
+		@NotBlank String amount, @NotBlank  String cashChange, boolean fragile, int noteCode,
 		@NotBlank @ValueOfEnum(enumClass = DeliveryStatus.class) String status, int courierId, int vehicleId
 		) {
 	

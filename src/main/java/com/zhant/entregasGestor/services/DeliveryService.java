@@ -36,7 +36,7 @@ public class DeliveryService {
 	
 	public List<DeliveryDTO> findAll() {
 		/*List<Delivery> allDeliveries = deliveryRepository.findAll();
-		List<DeliveryDTO> dtos = new ArrayList<EntregaDTO>(allEntregas.size());
+		List<DeliveryDTO> dtos = new ArrayList<DeliveryDTO>(allDelivery.size());
 		for(Delivery delivery: allDeliveries) {
 			DeliveryDTO dto = new deliveryDTO(delivery.getId(),delivery.getData(), delivery.getNomeCliente(), 
 					delivery.getBairro(), delivery.getValor(), delivery.getTroco(), delivery.isFragil(),
@@ -87,7 +87,7 @@ public class DeliveryService {
 			deliveryFunction.setCustomerName(delivery.customerName());
 			deliveryFunction.setNeighborhood(delivery.neighborhood());
 			deliveryFunction.setAmount(delivery.amount());
-			deliveryFunction.setChange(delivery.change());
+			deliveryFunction.setCashChange (delivery.cashChange());
 			deliveryFunction.setFragile(delivery.fragile());
 			deliveryFunction.setNoteCode(delivery.noteCode());
 			deliveryFunction.setCourier(courier);

@@ -32,7 +32,7 @@ public class Delivery {
 	
 	private String amount;
 	
-	private String change;
+	private String cashChange ;
 	
 	private boolean fragile;
 	
@@ -49,13 +49,13 @@ public class Delivery {
 	@Enumerated(EnumType.STRING)
 	private DeliveryStatus status = DeliveryStatus.EM_ANDAMENTO;
 
-	public Delivery(LocalDateTime orderDate, String customerName, String neighborhood, String amount, String change, boolean fragile,
+	public Delivery(LocalDateTime orderDate, String customerName, String neighborhood, String amount, String cashChange , boolean fragile,
 			int noteCode, Courier courier, Vehicle vehicle, DeliveryStatus status) {
 		this.orderDate = orderDate;
 		this.customerName = customerName;
 		this.neighborhood = neighborhood;
 		this.amount = amount;
-		this.change = change;
+		this.cashChange  = cashChange ;
 		this.fragile = fragile;
 		this.noteCode = noteCode;
 		this.courier = courier;
