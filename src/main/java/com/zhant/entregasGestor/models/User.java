@@ -31,14 +31,14 @@ public class User implements UserDetails{
     @JsonProperty("_id")
 	private int id;
     @NotNull
-	private String login;
+	private String username;
     @NotNull
 	private String password;
     @NotNull
 	private UserRole role;
     
-    public User(String login, String password, UserRole role) {
-    	this.login = login;
+    public User(String username, String password, UserRole role) {
+    	this.username = username;
     	this.password = password;
     	this.role = role;
     }
@@ -51,12 +51,12 @@ public class User implements UserDetails{
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return login;
+		return username;
 	}
-	public User(int id, @NotNull String login, @NotNull String password, @NotNull UserRole role) {
+	public User(int id, @NotNull String username, @NotNull String password, @NotNull UserRole role) {
 		super();
 		this.id = id;
-		this.login = login;
+		this.username = username;
 		this.password = password;
 		this.role = role;
 	}
