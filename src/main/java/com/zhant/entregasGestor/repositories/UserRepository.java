@@ -7,5 +7,5 @@ import com.zhant.entregasGestor.models.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-	UserDetails findByLogin(String username);
+	UserDetails findByUsername(String username);
 }
