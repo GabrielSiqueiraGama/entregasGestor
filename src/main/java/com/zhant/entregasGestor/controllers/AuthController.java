@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhant.entregasGestor.dto.LoginResponseDTO;
 import com.zhant.entregasGestor.dto.UserDTO;
 import com.zhant.entregasGestor.dto.UserRegisterDTO;
 import com.zhant.entregasGestor.models.User;
 import com.zhant.entregasGestor.repositories.UserRepository;
+import com.zhant.entregasGestor.services.TokenService;
 
 import jakarta.validation.Valid;
 
@@ -25,13 +27,16 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private TokenService tokenService;
+	
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid UserDTO user) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(user.username(), user.password());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
-		
-		return ResponseEntity.ok().build();
+		var token = tokenService.generateToken((User) auth.getPrincipal());
+		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 	
 	@PostMapping("/register")
