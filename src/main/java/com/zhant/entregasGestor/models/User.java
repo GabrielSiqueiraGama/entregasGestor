@@ -37,11 +37,6 @@ public class User implements UserDetails{
     @NotNull
 	private UserRole role;
     
-    public User(String username, String password, UserRole role) {
-    	this.username = username;
-    	this.password = password;
-    	this.role = role;
-    }
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,12 +49,18 @@ public class User implements UserDetails{
 		return username;
 	}
 	public User(int id, @NotNull String username, @NotNull String password, @NotNull UserRole role) {
-		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.role = role;
 	}
+	
+    public User(String username, String password, UserRole role) {
+    	this.username = username;
+    	this.password = password;
+    	this.role = role;
+    }
+
 	public User() {
 		super();
 	}
