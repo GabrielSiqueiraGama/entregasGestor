@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 import com.zhant.entregasGestor.dto.DeliveryDTO;
 import com.zhant.entregasGestor.dto.mapper.DeliveryMapper;
 import com.zhant.entregasGestor.enums.DeliveryStatus;
+import com.zhant.entregasGestor.exceptions.RecordNotFoundException;
 import com.zhant.entregasGestor.models.Courier;
 import com.zhant.entregasGestor.models.Vehicle;
-import com.zhant.entregasGestor.repositories.DeliveryRepository;
 import com.zhant.entregasGestor.repositories.CourierRepository;
+import com.zhant.entregasGestor.repositories.DeliveryRepository;
 import com.zhant.entregasGestor.repositories.VehicleRepository;
 
 import jakarta.validation.Valid;
@@ -49,7 +50,7 @@ public class DeliveryService {
 	}
 	
 	public DeliveryDTO findById(int id) throws BadRequestException{
-		return deliveryRepository.findById(id).map(deliveryMapper::toDto).orElseThrow(()-> new BadRequestException("Entrega não encontrada!"));
+		return deliveryRepository.findById(id).map(deliveryMapper::toDto).orElseThrow(()-> new RecordNotFoundException(id));
 	}
 	
 	public List<DeliveryDTO> findByVehicle(int vehicleId) throws BadRequestException{
@@ -78,9 +79,9 @@ public class DeliveryService {
 	
 	public DeliveryDTO update(int id,@Valid DeliveryDTO delivery) throws BadRequestException {
         Courier courier = courierRepository.findById(delivery.courierId())
-                .orElseThrow(() -> new BadRequestException("Entregador não encontrado"));
+                .orElseThrow(()-> new RecordNotFoundException(id));
 		Vehicle vehicle = vehicleRepository.findById(delivery.vehicleId())
-		          .orElseThrow(() -> new BadRequestException("Veículo não encontrado"));
+		          .orElseThrow(()-> new RecordNotFoundException(id));
 
 		return deliveryRepository.findById(id).map(deliveryFunction ->{
 			deliveryFunction.setOrderDate(delivery.orderDate());
@@ -98,7 +99,7 @@ public class DeliveryService {
 	}
 	
 	public void delete(int id) throws BadRequestException {
-		deliveryRepository.delete(deliveryRepository.findById(id).orElseThrow(()-> new BadRequestException("Entrega não encontrada!")));
+		deliveryRepository.delete(deliveryRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));
 	}
 	
 }

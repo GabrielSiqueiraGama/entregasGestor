@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhant.entregasGestor.dto.VehicleDTO;
 import com.zhant.entregasGestor.dto.mapper.VehicleMapper;
+import com.zhant.entregasGestor.exceptions.RecordNotFoundException;
 import com.zhant.entregasGestor.repositories.VehicleRepository;
 
 @Service
@@ -35,7 +36,7 @@ public class VehicleService {
 		return vehicleRepository.findById(id).map(vehicleFunction ->{
 			vehicleFunction.setName(vehicle.name());
 			return vehicleRepository.save(vehicleFunction);
-		}).map(vehicleMapper::toDto).orElseThrow(()-> new BadRequestException("Error ao editar"));
+		}).map(vehicleMapper::toDto).orElseThrow(()-> new RecordNotFoundException(id));
 	}
 	
 	public VehicleDTO create(VehicleDTO vehicle) {
@@ -44,6 +45,6 @@ public class VehicleService {
 	
 	
 	public void delete(int id) throws BadRequestException {
-		vehicleRepository.delete(vehicleRepository.findById(id).orElseThrow(()-> new BadRequestException("Veiculo não encontrada!")));
+		vehicleRepository.delete(vehicleRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));
 	}
 }

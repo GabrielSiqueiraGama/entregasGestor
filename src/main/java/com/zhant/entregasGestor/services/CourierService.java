@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zhant.entregasGestor.dto.CourierDTO;
 import com.zhant.entregasGestor.dto.mapper.CourierMapper;
+import com.zhant.entregasGestor.exceptions.RecordNotFoundException;
 import com.zhant.entregasGestor.repositories.CourierRepository;
 
 @Service
@@ -31,7 +32,7 @@ public class CourierService {
 	}
 	
 	public CourierDTO findById(int id) throws BadRequestException {
-		return courierRepository.findById(id).map(courierMapper::toDto).orElseThrow(()-> new BadRequestException("Entregador não encontrado"));
+		return courierRepository.findById(id).map(courierMapper::toDto).orElseThrow(()-> new RecordNotFoundException(id));
 	}
 	
 	public CourierDTO update(int id, CourierDTO courier) throws BadRequestException {
@@ -42,6 +43,6 @@ public class CourierService {
 	}
 	
 	public void delete(int id) throws BadRequestException {
-		courierRepository.delete(courierRepository.findById(id).orElseThrow(()-> new BadRequestException("Entregador não encontrado")));
+		courierRepository.delete(courierRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));
 	}
 }
