@@ -6,18 +6,22 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zhant.entregasGestor.dto.UserDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
 @Entity(name = "users")
+@Table(name = "users")
 @Getter
 @Setter
 public class User implements UserDetails{
@@ -55,11 +59,18 @@ public class User implements UserDetails{
 		this.role = role;
 	}
 	
-    public User(String username, String password, UserRole role) {
-    	this.username = username;
-    	this.password = password;
-    	this.role = role;
+	public User(@NotNull String username, @NotNull String password, @NotNull UserRole role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+	
+    public User(UserDTO data) {
+    	this.username = data.username();
+    	this.password = data.password();
+    	this.role = data.role();
     }
+    
 
 	public User() {
 		super();

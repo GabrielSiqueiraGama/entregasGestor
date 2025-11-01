@@ -1,5 +1,7 @@
 package com.zhant.entregasGestor.models;
 
+import com.zhant.entregasGestor.dto.VehicleDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,4 +23,9 @@ public class Vehicle {
 	private int id;
 	
 	private String name;
+
+	public Vehicle(Vehicle data) {
+		this.id = data.id;
+		this.name = data.name;
+	}
 }

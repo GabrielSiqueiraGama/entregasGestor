@@ -1,5 +1,7 @@
 package com.zhant.entregasGestor.dto;
 
-public record UserDTO(String username, String password) {
+import com.zhant.entregasGestor.models.UserRole;
+
+public record UserDTO(String username, String password, UserRole role) {
 
 }

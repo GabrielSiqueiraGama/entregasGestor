@@ -2,6 +2,8 @@ package com.zhant.entregasGestor.models;
 
 import java.time.LocalDateTime;
 
+import com.zhant.entregasGestor.dto.DeliveryDTO;
+import com.zhant.entregasGestor.dto.DeliveryTestDTO;
 import com.zhant.entregasGestor.enums.DeliveryStatus;
 
 import jakarta.persistence.Entity;
@@ -61,6 +63,19 @@ public class Delivery {
 		this.courier = courier;
 		this.vehicle = vehicle;
 		this.status = status;
+	}
+	
+	public Delivery(DeliveryTestDTO data) {
+		this.orderDate = data.orderDate();
+		this.customerName = data.customerName();
+		this.neighborhood = data.neighborhood();
+		this.amount = data.amount();
+		this.cashChange  = data.cashChange();
+		this.fragile = data.fragile();
+		this.noteCode = data.noteCode();
+		this.courier = data.courierId();
+		this.vehicle = data.vehicleId();
+		this.status = data.status();
 	}
 
 	public Delivery() {

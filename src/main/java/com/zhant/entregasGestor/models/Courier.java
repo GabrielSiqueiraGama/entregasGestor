@@ -21,4 +21,9 @@ public class Courier {
 	private int id;
 	
 	private String name;
+	
+	public Courier(Courier data) {
+		this.id = data.id;
+		this.name = data.name;
+	}
 }
