@@ -1,7 +1,5 @@
 package com.zhant.entregasGestor.models;
 
-import com.zhant.entregasGestor.dto.VehicleDTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

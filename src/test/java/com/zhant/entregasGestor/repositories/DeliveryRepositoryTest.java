@@ -57,21 +57,81 @@ class DeliveryRepositoryTest {
 	@Test
 	@DisplayName("Should return sucess to find by courier")
 	void findByCourier() {
+		Vehicle vehicle = new Vehicle(0, "Truck");
+		Courier courier = new Courier(0, "Pedro");
+		DeliveryTestDTO delivery = new DeliveryTestDTO(0, LocalDateTime.now(), "Ribeirinho", "Downtown", "50.00", "0", false, 123, DeliveryStatus.EM_ANDAMENTO, courier, vehicle);
+		
+		this.createCourier(courier);
+		this.createVehicle(vehicle);
+		this.createDelivery(delivery);
+		
+		entityManager.flush();
+		entityManager.clear();
+		
+		List<Delivery> foundedDelivery = this.deliveryRepository.findByCourier(courier);
+		assertThat(foundedDelivery).isNotEmpty();
+		assertThat(foundedDelivery.get(0).getCourier().getName()).isEqualTo(courier.getName());
 	}
 	
 	@Test
 	@DisplayName("Should return sucess to find by neighborhood")
 	void findByNeighborhood() {
+		
+		Vehicle vehicle = new Vehicle(0, "Truck");
+		Courier courier = new Courier(0, "Pedro");
+		String neighborhood = "Downtown";
+		DeliveryTestDTO delivery = new DeliveryTestDTO(0, LocalDateTime.now(), "Ribeirinho", neighborhood, "50.00", "0", false, 123, DeliveryStatus.EM_ANDAMENTO, courier, vehicle);
+		
+		this.createCourier(courier);
+		this.createVehicle(vehicle);
+		this.createDelivery(delivery);
+		
+		entityManager.flush();
+		entityManager.clear();
+		
+		List<Delivery> foundedDelivery = this.deliveryRepository.findByNeighborhood(neighborhood);
+		assertThat(foundedDelivery).isNotEmpty();
+		assertThat(foundedDelivery.get(0).getNeighborhood()).isEqualTo(neighborhood);
 	}
 	
 	@Test
 	@DisplayName("Should return sucess to find by costumerName")
 	void findByCustomerName() {
+		Vehicle vehicle = new Vehicle(0, "Truck");
+		Courier courier = new Courier(0, "Pedro");
+		String customerName = "Ribeirinho";
+		DeliveryTestDTO delivery = new DeliveryTestDTO(0, LocalDateTime.now(), customerName, "Downtown", "50.00", "0", false, 123, DeliveryStatus.EM_ANDAMENTO, courier, vehicle);
+		
+		this.createCourier(courier);
+		this.createVehicle(vehicle);
+		this.createDelivery(delivery);
+		
+		entityManager.flush();
+		entityManager.clear();
+		
+		List<Delivery> foundedDelivery = this.deliveryRepository.findByCustomerName(customerName);
+		assertThat(foundedDelivery).isNotEmpty();
+		assertThat(foundedDelivery.get(0).getCustomerName()).isEqualTo(customerName);
 	}
 	
 	@Test
 	@DisplayName("Should return sucess to find by noteCode")
 	void findByNoteCode() {
+		Vehicle vehicle = new Vehicle(0, "Truck");
+		Courier courier = new Courier(0, "Pedro");
+		int noteCode = 123;
+		DeliveryTestDTO delivery = new DeliveryTestDTO(0, LocalDateTime.now(), "Ribeirinho", "Downtown", "50.00", "0", false, noteCode, DeliveryStatus.EM_ANDAMENTO, courier, vehicle);
+		
+		this.createCourier(courier);
+		this.createVehicle(vehicle);
+		this.createDelivery(delivery);
+		
+		entityManager.flush();
+		entityManager.clear();
+		
+		List<Delivery> foundedDelivery = this.deliveryRepository.findByNoteCode(noteCode);
+		assertThat(foundedDelivery).isNotEmpty();
+		assertThat(foundedDelivery.get(0).getNoteCode()).isEqualTo(noteCode);
 	}	
 	
 	
