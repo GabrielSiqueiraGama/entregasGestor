@@ -2,6 +2,7 @@ package com.zhant.entregasGestor.controllers;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import jakarta.validation.Valid;
 
 @Validated
 @RestController
+@Tag(name = "Delivery Module")
 @RequestMapping("/api/deliveries")
 public class DeliveryController {
 

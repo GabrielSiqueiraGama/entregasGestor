@@ -2,6 +2,11 @@ package com.zhant.entregasGestor.controllers;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +28,20 @@ import jakarta.validation.Valid;
 
 @Validated
 @RestController
+@Tag(name = "Courier Module")
 @RequestMapping("api/couriers")
 public class CourierController {
 
 	@Autowired
 	private CourierService courierService;
-	
-	@GetMapping
+
+    @Operation(summary = "Listing All Couriers", description = "Bring all the Couriers in List")
+	@ApiResponses(value = {
+            @ApiResponse(responseCode = "403", description = "User unauthenticated"),
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = "200", description = "Bring correctly all the Couriers")
+    })
+    @GetMapping
 	public List<CourierDTO> findCouriers(){
 		return courierService.findAll();
 	}
@@ -39,9 +51,15 @@ public class CourierController {
 	public CourierDTO create(@Valid @RequestBody CourierDTO courier) {
 		return courierService.create(courier);
 	}
-	
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "403", description = "User unauthenticated"),
+            @ApiResponse(responseCode = "500", description = "Internal server error"),
+            @ApiResponse(responseCode = "404", description = "Courier Not Found"),
+            @ApiResponse(responseCode = "200", description = "Bring correctly all the Couriers")
+    })
 	@GetMapping("/{id}")
-	public CourierDTO findById(@PathVariable int id) throws BadRequestException {
+	public CourierDTO findById(@Parameter(description = "The Id is required to find the Courier that you are looking for", required = true) @PathVariable int id) throws BadRequestException {
 		return courierService.findById(id);
 	}
 	
