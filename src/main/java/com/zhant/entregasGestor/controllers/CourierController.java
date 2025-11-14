@@ -29,6 +29,11 @@ import jakarta.validation.Valid;
 @Validated
 @RestController
 @Tag(name = "Courier Module")
+@ApiResponses({
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "403", description = "User unauthenticated"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+})
 @RequestMapping("api/couriers")
 public class CourierController {
 
@@ -36,38 +41,29 @@ public class CourierController {
 	private CourierService courierService;
 
     @Operation(summary = "Listing All Couriers", description = "Bring all the Couriers in List")
-	@ApiResponses(value = {
-            @ApiResponse(responseCode = "403", description = "User unauthenticated"),
-            @ApiResponse(responseCode = "500", description = "Internal server error"),
-            @ApiResponse(responseCode = "200", description = "Bring correctly all the Couriers")
-    })
     @GetMapping
 	public List<CourierDTO> findCouriers(){
 		return courierService.findAll();
 	}
-	
+
+
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public CourierDTO create(@Valid @RequestBody CourierDTO courier) {
 		return courierService.create(courier);
 	}
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "403", description = "User unauthenticated"),
-            @ApiResponse(responseCode = "500", description = "Internal server error"),
-            @ApiResponse(responseCode = "404", description = "Courier Not Found"),
-            @ApiResponse(responseCode = "200", description = "Bring correctly all the Couriers")
-    })
 	@GetMapping("/{id}")
 	public CourierDTO findById(@Parameter(description = "The Id is required to find the Courier that you are looking for", required = true) @PathVariable int id) throws BadRequestException {
 		return courierService.findById(id);
 	}
-	
+
+
 	@PutMapping("/{id}")
 	public CourierDTO update(@PathVariable int id, @RequestBody CourierDTO courier) throws BadRequestException {
 		return courierService.update(id, courier);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) throws BadRequestException{
