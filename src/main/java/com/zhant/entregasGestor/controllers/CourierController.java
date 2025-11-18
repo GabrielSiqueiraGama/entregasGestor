@@ -31,16 +31,20 @@ import jakarta.validation.Valid;
 @Tag(name = "Courier Module")
 @ApiResponses({
         @ApiResponse(responseCode = "400", description = "Bad Request"),
-        @ApiResponse(responseCode = "403", description = "User unauthenticated"),
+        @ApiResponse(responseCode = "403", description = "User does not have permission"),
+        @ApiResponse(responseCode = "401", description = "User unauthenticated"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
 })
-@RequestMapping("api/couriers")
+@RequestMapping("/api/couriers")
 public class CourierController {
 
 	@Autowired
 	private CourierService courierService;
 
-    @Operation(summary = "Listing All Couriers", description = "Bring all the Couriers in List")
+    @Operation(summary = "Listing All Couriers")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success"),
+    })
     @GetMapping
 	public List<CourierDTO> findCouriers(){
 		return courierService.findAll();
@@ -49,22 +53,41 @@ public class CourierController {
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
+    @Operation(summary = "Create a new Courier")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Created"),
+    })
 	public CourierDTO create(@Valid @RequestBody CourierDTO courier) {
 		return courierService.create(courier);
 	}
 
 	@GetMapping("/{id}")
+    @Operation(summary = "Bring the Courier by the id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+    })
 	public CourierDTO findById(@Parameter(description = "The Id is required to find the Courier that you are looking for", required = true) @PathVariable int id) throws BadRequestException {
 		return courierService.findById(id);
 	}
 
 
 	@PutMapping("/{id}")
-	public CourierDTO update(@PathVariable int id, @RequestBody CourierDTO courier) throws BadRequestException {
+    @Operation(summary = "Update Courier")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+    })
+	public CourierDTO update(@PathVariable int id, @Valid @RequestBody CourierDTO courier) throws BadRequestException {
 		return courierService.update(id, courier);
 	}
 
 	@DeleteMapping("/{id}")
+    @Operation(summary = "Delete Courier")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "No Content"),
+            @ApiResponse(responseCode = "404", description = "Not Found"),
+    })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) throws BadRequestException{
 		courierService.delete(id);
