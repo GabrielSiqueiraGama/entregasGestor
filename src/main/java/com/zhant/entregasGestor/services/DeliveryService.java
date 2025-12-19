@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import com.zhant.entregasGestor.dto.DeliveryDTO;
@@ -18,6 +20,7 @@ import com.zhant.entregasGestor.repositories.DeliveryRepository;
 import com.zhant.entregasGestor.repositories.VehicleRepository;
 
 import jakarta.validation.Valid;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class DeliveryService {
@@ -95,8 +98,22 @@ public class DeliveryService {
 			deliveryFunction.setVehicle(vehicle);
 			deliveryFunction.setStatus(DeliveryStatus.valueOf(delivery.status()));
 			return deliveryRepository.save(deliveryFunction);
-		}).map(deliveryMapper::toDto).orElseThrow(()-> new BadRequestException("aaaaa"));
+		}).map(deliveryMapper::toDto).orElseThrow(()-> new BadRequestException("Delivery not found"));
 	}
+
+    public DeliveryDTO finishDelivery(int id) throws BadRequestException {
+        return deliveryRepository.findById(id)
+                .map(delivery -> {
+                    if(delivery.getStatus() == DeliveryStatus.FINALIZADA) {
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Entrega já está finalizada");
+                    }
+                    delivery.setStatus(DeliveryStatus.FINALIZADA);
+                    return deliveryRepository.save(delivery);
+                })
+                .map(deliveryMapper::toDto)
+                .orElseThrow(()-> new BadRequestException("Delivery not found"));
+    }
+
 	
 	public void delete(int id) throws BadRequestException {
 		deliveryRepository.delete(deliveryRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id)));

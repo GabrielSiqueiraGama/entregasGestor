@@ -12,15 +12,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.zhant.entregasGestor.dto.DeliveryDTO;
 import com.zhant.entregasGestor.services.DeliveryService;
@@ -138,6 +130,13 @@ public class DeliveryController {
 	public void delete(@PathVariable int id) throws BadRequestException {
 		deliveryService.delete(id);
 	}
+
+    @PatchMapping("/{id}/finishDelivery")
+    @Operation(summary = "Finish a delivery")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public DeliveryDTO finishDelivery(@PathVariable int id) throws BadRequestException {
+        return deliveryService.finishDelivery(id);
+    }
 
     @GetMapping("/analytics/countByNeighborhood")
     @Operation(summary = "Get delivery count grouped by Neighborhood")
