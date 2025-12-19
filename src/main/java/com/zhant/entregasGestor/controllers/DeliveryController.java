@@ -1,7 +1,9 @@
 package com.zhant.entregasGestor.controllers;
 
 import java.util.List;
+import java.util.Map;
 
+import com.zhant.entregasGestor.services.DeliveryAnalyticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -38,6 +40,8 @@ public class DeliveryController {
 
 	@Autowired
 	DeliveryService deliveryService;
+    @Autowired
+    DeliveryAnalyticsService deliveryAnalyticsService;
 	
 	@GetMapping
     @Operation(summary = "Bring All Deliveries")
@@ -134,5 +138,25 @@ public class DeliveryController {
 	public void delete(@PathVariable int id) throws BadRequestException {
 		deliveryService.delete(id);
 	}
-	
+
+    @GetMapping("/analytics/countByNeighborhood")
+    @Operation(summary = "Get delivery count grouped by Neighborhood")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public Map<String, Integer> getDeliveriesCountByNeighborhood(){
+        return deliveryAnalyticsService.getDeliveryCountByNeighborhood();
+    }
+
+    @GetMapping("/analytics/countByCourier")
+    @Operation(summary = "Get delivery count grouped by Couriers")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public Map<String, Integer> getDeliveryCountByCourier(){
+        return deliveryAnalyticsService.getDeliveryCountByCourier();
+    }
+
+    @GetMapping("/analytics/countByVehicle")
+    @Operation(summary = "Get delivery count grouped by Vehicle")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public Map<String, Integer> getDeliveryCountByVehicle(){
+        return deliveryAnalyticsService.getDeliveryCountByVehicle();
+    }
 }
