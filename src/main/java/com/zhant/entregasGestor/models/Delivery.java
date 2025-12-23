@@ -2,7 +2,6 @@ package com.zhant.entregasGestor.models;
 
 import java.time.LocalDateTime;
 
-import com.zhant.entregasGestor.dto.DeliveryDTO;
 import com.zhant.entregasGestor.dto.DeliveryTestDTO;
 import com.zhant.entregasGestor.enums.DeliveryStatus;
 
@@ -14,12 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 public class Delivery {
 
 	@Id
@@ -80,8 +75,92 @@ public class Delivery {
 
 	public Delivery() {
 	}
-	
-	
-	
-	
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getCashChange() {
+        return cashChange;
+    }
+
+    public void setCashChange(String cashChange) {
+        this.cashChange = cashChange;
+    }
+
+    public boolean isFragile() {
+        return fragile;
+    }
+
+    public void setFragile(boolean fragile) {
+        this.fragile = fragile;
+    }
+
+    public int getNoteCode() {
+        return noteCode;
+    }
+
+    public void setNoteCode(int noteCode) {
+        this.noteCode = noteCode;
+    }
+
+    public Courier getCourier() {
+        return courier;
+    }
+
+    public void setCourier(Courier courier) {
+        this.courier = courier;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public DeliveryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
+    }
 }

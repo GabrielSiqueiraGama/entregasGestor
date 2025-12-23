@@ -14,9 +14,8 @@ import com.zhant.entregasGestor.repositories.CourierRepository;
 @Service
 public class CourierService {
 
-	@Autowired
-	private CourierRepository courierRepository;
-	private CourierMapper courierMapper;
+    private final CourierRepository courierRepository;
+	private final CourierMapper courierMapper;
 	
 	public CourierService(CourierRepository courierRepository, CourierMapper courierMapper) {
 		this.courierRepository = courierRepository;

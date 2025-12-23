@@ -14,9 +14,8 @@ import com.zhant.entregasGestor.repositories.VehicleRepository;
 @Service
 public class VehicleService {
 
-	@Autowired
-	private VehicleRepository vehicleRepository;
-	private VehicleMapper vehicleMapper;
+	private final VehicleRepository vehicleRepository;
+	private final VehicleMapper vehicleMapper;
 	
 	public VehicleService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper ) {
 		this.vehicleRepository = vehicleRepository;

@@ -1,12 +1,10 @@
 package com.zhant.entregasGestor.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import com.zhant.entregasGestor.dto.DeliveryDTO;
@@ -25,11 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class DeliveryService {
 
-	@Autowired
-	private DeliveryRepository deliveryRepository;
-	private DeliveryMapper deliveryMapper;
-	private VehicleRepository vehicleRepository;
-	private CourierRepository courierRepository;
+    private final DeliveryRepository deliveryRepository;
+    private final DeliveryMapper deliveryMapper;
+	private final VehicleRepository vehicleRepository;
+	private final CourierRepository courierRepository;
 	
 	public DeliveryService(DeliveryRepository deliveryRepository, DeliveryMapper deliveryMapper, VehicleRepository vehicleRepository, CourierRepository courierRepository) {
 		this.deliveryMapper = deliveryMapper;
@@ -39,17 +36,10 @@ public class DeliveryService {
 	}
 	
 	public List<DeliveryDTO> findAll() {
-		/*List<Delivery> allDeliveries = deliveryRepository.findAll();
-		List<DeliveryDTO> dtos = new ArrayList<DeliveryDTO>(allDelivery.size());
-		for(Delivery delivery: allDeliveries) {
-			DeliveryDTO dto = new deliveryDTO(delivery.getId(),delivery.getData(), delivery.getNomeCliente(), 
-					delivery.getBairro(), delivery.getValor(), delivery.getTroco(), delivery.isFragil(),
-					delivery.getNota(),delivery.getStatus().toString(), delivery.getCourier().getId(),
-					delivery.getVehicle().getId());
-			dtos.add(dto);
-		}
-		return dtos;*/
-		return deliveryRepository.findAll().stream().map(deliveryMapper::toDto).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+		return deliveryRepository.findAll()
+                .stream()
+                .map(deliveryMapper::toDto)
+                .collect(Collectors.toList());
 	}
 	
 	public DeliveryDTO findById(int id) throws BadRequestException{
@@ -82,9 +72,9 @@ public class DeliveryService {
 	
 	public DeliveryDTO update(int id,@Valid DeliveryDTO delivery) throws BadRequestException {
         Courier courier = courierRepository.findById(delivery.courierId())
-                .orElseThrow(()-> new RecordNotFoundException(id));
+                .orElseThrow(()-> new RecordNotFoundException(delivery.courierId()));
 		Vehicle vehicle = vehicleRepository.findById(delivery.vehicleId())
-		          .orElseThrow(()-> new RecordNotFoundException(id));
+		          .orElseThrow(()-> new RecordNotFoundException(delivery.vehicleId()));
 
 		return deliveryRepository.findById(id).map(deliveryFunction ->{
 			deliveryFunction.setOrderDate(delivery.orderDate());
@@ -105,7 +95,7 @@ public class DeliveryService {
         return deliveryRepository.findById(id)
                 .map(delivery -> {
                     if(delivery.getStatus() == DeliveryStatus.FINALIZADA) {
-                        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Entrega já está finalizada");
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Delivery Already is finished");
                     }
                     delivery.setStatus(DeliveryStatus.FINALIZADA);
                     return deliveryRepository.save(delivery);

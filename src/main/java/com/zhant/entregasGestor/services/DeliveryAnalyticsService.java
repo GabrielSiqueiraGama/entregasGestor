@@ -23,15 +23,12 @@ public class DeliveryAnalyticsService {
     private DeliveryMapper deliveryMapper;
 
     public Map<String, Integer> getDeliveryCountByNeighborhood(){
-        List<DeliveryDTO> deliveries = deliveryRepository.findAll()
-                .stream()
-                .map(deliveryMapper::toDto)
-                .collect(Collectors.toList());
+        List<Delivery> deliveries = deliveryRepository.findAll();
 
         Map<String, Integer> neighborhoodCount = new HashMap<>();
 
-        for(DeliveryDTO delivery: deliveries){
-            String neighborhood = delivery.neighborhood();
+        for(Delivery delivery: deliveries){
+            String neighborhood = delivery.getNeighborhood();
             neighborhoodCount.put(neighborhood, neighborhoodCount.getOrDefault(neighborhood, 0) + 1);
         }
         return neighborhoodCount;
