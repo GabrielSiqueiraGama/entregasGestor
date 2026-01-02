@@ -1,26 +1,20 @@
 package com.zhant.entregasGestor.services;
 
-import com.zhant.entregasGestor.dto.DeliveryDTO;
-import com.zhant.entregasGestor.dto.mapper.DeliveryMapper;
+import com.zhant.entregasGestor.dto.AnalyticsDTO;
 import com.zhant.entregasGestor.models.Delivery;
-import com.zhant.entregasGestor.repositories.CourierRepository;
 import com.zhant.entregasGestor.repositories.DeliveryRepository;
-import com.zhant.entregasGestor.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class DeliveryAnalyticsService {
 
     @Autowired
     private DeliveryRepository deliveryRepository;
-    @Autowired
-    private DeliveryMapper deliveryMapper;
 
     public Map<String, Integer> getDeliveryCountByNeighborhood(){
         List<Delivery> deliveries = deliveryRepository.findAll();
@@ -32,6 +26,31 @@ public class DeliveryAnalyticsService {
             neighborhoodCount.put(neighborhood, neighborhoodCount.getOrDefault(neighborhood, 0) + 1);
         }
         return neighborhoodCount;
+    }
+    
+    public Map<String, AnalyticsDTO> getPercentageDeliveryCountByNeighborhood() {
+        List<Delivery> deliveries = deliveryRepository.findAll();
+        int total = deliveries.size();
+
+        Map<String, Integer> neighborhoodCount = new HashMap<>();
+
+        for (Delivery delivery : deliveries) {
+            String neighborhood = delivery.getNeighborhood();
+            neighborhoodCount.put(neighborhood, neighborhoodCount.getOrDefault(neighborhood, 0) + 1);
+        }
+
+        Map<String, AnalyticsDTO> result = new HashMap<>();
+
+        for (Map.Entry<String, Integer> entry : neighborhoodCount.entrySet()) {
+            double percentage = (entry.getValue() * 100.0) / total;
+            percentage = Math.round(percentage * 100.0) / 100.0;
+            result.put(
+                entry.getKey(),
+                new AnalyticsDTO(entry.getValue(), percentage)
+            );
+        }
+
+        return result;
     }
 
 

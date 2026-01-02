@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.zhant.entregasGestor.dto.AnalyticsDTO;
 import com.zhant.entregasGestor.dto.DeliveryDTO;
 import com.zhant.entregasGestor.services.DeliveryService;
 
@@ -145,6 +146,14 @@ public class DeliveryController {
         return deliveryAnalyticsService.getDeliveryCountByNeighborhood();
     }
 
+    @GetMapping("/analytics/percentageByNeighborhood")
+    @Operation(summary = "Get delivery percentage grouped by Neighborhood")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public Map<String, AnalyticsDTO> getPercentageDeliveryCountByNeighborhood(){
+        return deliveryAnalyticsService.getPercentageDeliveryCountByNeighborhood();
+    }
+
+    
     @GetMapping("/analytics/countByCourier")
     @Operation(summary = "Get delivery count grouped by Couriers")
     @ApiResponse(responseCode = "200", description = "Success")
