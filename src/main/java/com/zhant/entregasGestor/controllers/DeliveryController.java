@@ -149,8 +149,8 @@ public class DeliveryController {
     @GetMapping("/analytics/percentageByNeighborhood")
     @Operation(summary = "Get delivery percentage grouped by Neighborhood")
     @ApiResponse(responseCode = "200", description = "Success")
-    public Map<String, AnalyticsDTO> getPercentageDeliveryCountByNeighborhood(){
-        return deliveryAnalyticsService.getPercentageDeliveryCountByNeighborhood();
+    public Map<String, AnalyticsDTO> getDeliveryStatsByNeighborhood(){
+        return deliveryAnalyticsService.getDeliveryStatsByNeighborhood();
     }
 
     

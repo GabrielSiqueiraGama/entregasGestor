@@ -28,7 +28,7 @@ public class DeliveryAnalyticsService {
         return neighborhoodCount;
     }
     
-    public Map<String, AnalyticsDTO> getPercentageDeliveryCountByNeighborhood() {
+    public Map<String, AnalyticsDTO> getDeliveryStatsByNeighborhood() {
         List<Delivery> deliveries = deliveryRepository.findAll();
         int total = deliveries.size();
 
