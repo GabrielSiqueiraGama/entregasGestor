@@ -1,0 +1,37 @@
+name: "First level: Basic CI"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '21'
+
+jobs:
+  basic-setup:
+    name: Setup & Basic Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout de código
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: maven
+
+      - name: Informações do ambiente
+        run: |
+          echo "Runner: ${{ runner.os }}"
+          echo "Java:"
+          java -version
+          echo "Maven:" 
+          mvn -v
+
+      - name: Build & Testes
+        run: mvn clean verify
