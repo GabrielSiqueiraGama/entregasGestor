@@ -1,7 +1,6 @@
 package com.zhant.entregasGestor.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,14 +23,16 @@ import jakarta.validation.Valid;
 @Tag(name = "Register & Login")
 @RequestMapping("auth")
 public class AuthController {
-	
-	@Autowired
-	private AuthenticationManager authenticationManager;
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private TokenService tokenService;
-	
+
+	private final AuthenticationManager authenticationManager;
+	private final UserRepository userRepository;
+	private final TokenService tokenService;
+
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, TokenService tokenService){
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.tokenService = tokenService;
+    }
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid UserDTO user) {

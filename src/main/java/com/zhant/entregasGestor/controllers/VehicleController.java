@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,8 +34,11 @@ import com.zhant.entregasGestor.services.VehicleService;
 @RequestMapping("/api/vehicles")
 public class VehicleController {
 
-	@Autowired
-	private VehicleService vehicleService;
+	private final VehicleService vehicleService;
+
+    public VehicleController(VehicleService vehicleService){
+        this.vehicleService = vehicleService;
+    }
 	
 	@GetMapping
     @Operation(summary = "Listing All Vehicles")

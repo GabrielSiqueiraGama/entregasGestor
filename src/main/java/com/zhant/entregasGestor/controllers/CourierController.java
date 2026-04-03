@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,8 +37,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/couriers")
 public class CourierController {
 
-	@Autowired
-	private CourierService courierService;
+	private final CourierService courierService;
+
+    public CourierController(CourierService courierService){
+        this.courierService = courierService;
+    }
 
     @Operation(summary = "Listing All Couriers")
     @ApiResponses({

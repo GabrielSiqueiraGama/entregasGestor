@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +30,13 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/deliveries")
 public class DeliveryController {
 
-	@Autowired
-	DeliveryService deliveryService;
-    @Autowired
-    DeliveryAnalyticsService deliveryAnalyticsService;
+	private final DeliveryService deliveryService;
+    private final DeliveryAnalyticsService deliveryAnalyticsService;
+
+    public DeliveryController(DeliveryService deliveryService, DeliveryAnalyticsService deliveryAnalyticsService){
+        this.deliveryService = deliveryService;
+        this.deliveryAnalyticsService = deliveryAnalyticsService;
+    }
 	
 	@GetMapping
     @Operation(summary = "Bring All Deliveries")
